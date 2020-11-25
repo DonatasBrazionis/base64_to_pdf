@@ -1,20 +1,22 @@
 ﻿using System;
 using System.IO;
-using System.Web;
 
 namespace pdf
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static readonly string FilesDirectoryPath = "./Files/";
+        public static readonly string SourceFileName = "example.txt";
+        public static readonly string ResultFileName = $"result_{DateTimeOffset.Now.ToString("yyyyMMdd'_'HHmmss")}.pdf";
+
+        public static void Main(string[] args)
         {
-            var incomingFileLocation = $"{AppContext.BaseDirectory}data";
+            var incomingFileLocation = $"{FilesDirectoryPath}{SourceFileName}";
             var text = File.ReadAllText(incomingFileLocation);
 
             var pdfInBytes = Convert.FromBase64String(text);
 
-            var fileName = DateTimeOffset.Now.ToString("yyyyMMdd'_'HHmmss");
-            var resultFileLocation = $"{AppContext.BaseDirectory}result_{fileName}.pdf";
+            var resultFileLocation = $"{FilesDirectoryPath}{ResultFileName}";
             File.WriteAllBytes(resultFileLocation, pdfInBytes);
 
             Console.WriteLine($"Generated file location: {resultFileLocation}");
